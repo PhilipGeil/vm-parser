@@ -48,6 +48,11 @@ func (p *Parser) parseLine(line string) (lines []string) {
 		return p.pop(line)
 	}
 
+	// Check if program flow
+	if p.isProgramFlow(line) {
+		return p.programFlow(line)
+	}
+
 	// arithmetic
 	return p.arithmetic(line)
 }

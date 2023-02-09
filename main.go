@@ -11,7 +11,7 @@ import (
 )
 
 func main() {
-	filePath := "StackTest.vm"
+	filePath := "FibonacciSeries.vm"
 	// load file
 	lines, err := loadFile(filePath)
 	if err != nil {
@@ -35,7 +35,7 @@ func loadFile(path string) ([]string, error) {
 
 func writeToFile(lines []string) {
 	// Open file using os.Create()
-	file, err := os.Create("StackTest.asm")
+	file, err := os.Create("FibonacciSeries.asm")
 	if err != nil {
 		panic(err)
 	}

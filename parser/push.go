@@ -45,9 +45,10 @@ func (p *Parser) pushLocal(line string) (lines []string) {
 	index := splittedLines[2]
 
 	lines = append(lines, "@LCL")
-	lines = append(lines, "D=A")
+	lines = append(lines, "D=M")
 	lines = append(lines, "@"+index)
-	lines = append(lines, "D=D+A")
+	lines = append(lines, "A=D+A")
+	lines = append(lines, "D=M")
 	lines = append(lines, "@SP")
 	lines = append(lines, "A=M")
 	lines = append(lines, "M=D")
@@ -64,9 +65,10 @@ func (p *Parser) pushArgument(line string) (lines []string) {
 	index := splittedLines[2]
 
 	lines = append(lines, "@ARG")
-	lines = append(lines, "D=A")
+	lines = append(lines, "D=M")
 	lines = append(lines, "@"+index)
-	lines = append(lines, "D=D+A")
+	lines = append(lines, "A=D+A")
+	lines = append(lines, "D=M")
 	lines = append(lines, "@SP")
 	lines = append(lines, "A=M")
 	lines = append(lines, "M=D")
@@ -83,9 +85,10 @@ func (p *Parser) pushThis(line string) (lines []string) {
 	index := splittedLines[2]
 
 	lines = append(lines, "@THIS")
-	lines = append(lines, "D=A")
+	lines = append(lines, "D=M")
 	lines = append(lines, "@"+index)
-	lines = append(lines, "D=D+A")
+	lines = append(lines, "A=D+A")
+	lines = append(lines, "D=M")
 	lines = append(lines, "@SP")
 	lines = append(lines, "A=M")
 	lines = append(lines, "M=D")
@@ -102,9 +105,10 @@ func (p *Parser) pushThat(line string) (lines []string) {
 	index := splittedLines[2]
 
 	lines = append(lines, "@THAT")
-	lines = append(lines, "D=A")
+	lines = append(lines, "D=M")
 	lines = append(lines, "@"+index)
-	lines = append(lines, "D=D+A")
+	lines = append(lines, "A=D+A")
+	lines = append(lines, "D=M")
 	lines = append(lines, "@SP")
 	lines = append(lines, "A=M")
 	lines = append(lines, "M=D")

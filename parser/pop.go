@@ -178,18 +178,22 @@ func (p *Parser) popPointer(line string) (lines []string) {
 	index := splittedLines[2]
 
 	if index == "0" {
-		lines = append(lines, decSP()...)
-		lines = append(lines, "@SP")
-		lines = append(lines, "A=M")
-		lines = append(lines, "D=M")
 		lines = append(lines, "@THIS")
+		lines = append(lines, "D=A")
+		lines = append(lines, "@R13")
 		lines = append(lines, "M=D")
-	} else if index == "1" {
-		lines = append(lines, decSP()...)
 		lines = append(lines, "@SP")
-		lines = append(lines, "A=M")
+		lines = append(lines, decSP()...)
 		lines = append(lines, "D=M")
+	} else if index == "1" {
 		lines = append(lines, "@THAT")
+		lines = append(lines, "D=A")
+		lines = append(lines, "@R13")
+		lines = append(lines, "M=D")
+		lines = append(lines, decSP()...)
+		lines = append(lines, "D=M")
+		lines = append(lines, "@R13")
+		lines = append(lines, "A=M")
 		lines = append(lines, "M=D")
 	} else {
 		log.Panicf("invalid index for pop pointer: %s", index)
