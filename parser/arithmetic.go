@@ -1,9 +1,13 @@
 package parser
 
-import "strconv"
+import (
+	"strconv"
+	"strings"
+)
 
 func (p *Parser) arithmetic(line string) (lines []string) {
-	switch line {
+	splittedLines := strings.Split(line, " ")
+	switch splittedLines[0] {
 	case "add":
 		lines = p.add()
 	case "sub":
@@ -22,6 +26,8 @@ func (p *Parser) arithmetic(line string) (lines []string) {
 		lines = p.or()
 	case "not":
 		lines = p.not()
+	default:
+		panic("unknown arithmetic command: " + line)
 	}
 	return
 }

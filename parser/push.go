@@ -1,6 +1,7 @@
 package parser
 
 import (
+	"fmt"
 	"log"
 	"strconv"
 	"strings"
@@ -147,8 +148,14 @@ func (p *Parser) pushStatic(line string) (lines []string) {
 		log.Panicf("failed to convert index to int: %s", err)
 	}
 
-	lines = append(lines, "@"+strconv.Itoa(indexInt+16))
+	fmt.Println("push", p.FileName)
+
+	lines = append(lines, "@"+p.FileName+"."+strconv.Itoa(indexInt))
+	lines = append(lines, "D=M")
+	lines = append(lines, "@SP")
+	lines = append(lines, "A=M")
 	lines = append(lines, "M=D")
+	lines = append(lines, incSP()...)
 	return
 }
 

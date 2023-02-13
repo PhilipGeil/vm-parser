@@ -1,6 +1,7 @@
 package parser
 
 import (
+	"fmt"
 	"log"
 	"strconv"
 	"strings"
@@ -139,9 +140,10 @@ func (p *Parser) popStatic(line string) (lines []string) {
 		log.Panicf("failed to convert index to int: %s", err)
 	}
 
+	fmt.Println("pop", p.FileName)
 	lines = append(lines, decSP()...)
 	lines = append(lines, "D=M")
-	lines = append(lines, "@"+strconv.Itoa(indexInt+16))
+	lines = append(lines, "@"+p.FileName+"."+strconv.Itoa(indexInt))
 	lines = append(lines, "M=D")
 
 	return
@@ -161,9 +163,16 @@ func (p *Parser) popTemp(line string) (lines []string) {
 		log.Panicf("failed to convert index to int: %s", err)
 	}
 
+	lines = append(lines, "@5")
+	lines = append(lines, "D=A")
+	lines = append(lines, "@"+strconv.Itoa(indexInt))
+	lines = append(lines, "D=D+A")
+	lines = append(lines, "@R13")
+	lines = append(lines, "M=D")
 	lines = append(lines, decSP()...)
 	lines = append(lines, "D=M")
-	lines = append(lines, "@"+strconv.Itoa(indexInt+5))
+	lines = append(lines, "@R13")
+	lines = append(lines, "A=M")
 	lines = append(lines, "M=D")
 
 	return
@@ -182,9 +191,11 @@ func (p *Parser) popPointer(line string) (lines []string) {
 		lines = append(lines, "D=A")
 		lines = append(lines, "@R13")
 		lines = append(lines, "M=D")
-		lines = append(lines, "@SP")
 		lines = append(lines, decSP()...)
 		lines = append(lines, "D=M")
+		lines = append(lines, "@R13")
+		lines = append(lines, "A=M")
+		lines = append(lines, "M=D")
 	} else if index == "1" {
 		lines = append(lines, "@THAT")
 		lines = append(lines, "D=A")

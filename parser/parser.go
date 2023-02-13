@@ -9,6 +9,8 @@ type Parser struct {
 	ArithmeticCounter int
 	Static            int
 	Temp              int
+	CallCounter       int
+	FileName          string
 }
 
 func NewParser() *Parser {
@@ -17,6 +19,7 @@ func NewParser() *Parser {
 		ArithmeticCounter: 0,
 		Static:            16,
 		Temp:              5,
+		CallCounter:       0,
 	}
 }
 
@@ -53,8 +56,72 @@ func (p *Parser) parseLine(line string) (lines []string) {
 		return p.programFlow(line)
 	}
 
+	// Check if subroutine
+	if p.isSubroutine(line) {
+		return p.subroutines(line)
+	}
+
 	// arithmetic
 	return p.arithmetic(line)
+}
+
+func (p *Parser) Init() []string {
+	return []string{
+		"@256",
+		"D=A",
+		"@SP",
+		"M=D",
+		"@RETURN_LABEL0",
+		"D=A",
+		"@SP",
+		"A=M",
+		"M=D",
+		"@SP",
+		"M=M+1",
+		"@LCL",
+		"D=M",
+		"@SP",
+		"A=M",
+		"M=D",
+		"@SP",
+		"M=M+1",
+		"@ARG",
+		"D=M",
+		"@SP",
+		"A=M",
+		"M=D",
+		"@SP",
+		"M=M+1",
+		"@THIS",
+		"D=M",
+		"@SP",
+		"A=M",
+		"M=D",
+		"@SP",
+		"M=M+1",
+		"@THAT",
+		"D=M",
+		"@SP",
+		"A=M",
+		"M=D",
+		"@SP",
+		"M=M+1",
+		"@SP",
+		"D=M",
+		"@5",
+		"D=D-A",
+		"@0",
+		"D=D-A",
+		"@ARG",
+		"M=D",
+		"@SP",
+		"D=M",
+		"@LCL",
+		"M=D",
+		"@Sys.init",
+		"0;JMP",
+		"(RETURN_LABEL0)",
+	}
 }
 
 func incSP() []string {
